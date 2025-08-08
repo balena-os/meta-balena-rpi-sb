@@ -1,0 +1,33 @@
+
+  _           _                   ___  ____
+ | |__   __ _| | ___ _ __   __ _ / _ \/ ___|
+ | '_ \ / _` | |/ _ \ '_ \ / _` | | | \___ \
+ | |_) | (_| | |  __/ | | | (_| | |_| |___) |
+ |_.__/ \__,_|_|\___|_| |_|\__,_|\___/|____/
+
+ -------------------------------------------- 
+
+Resin specific images available:
+	balena-image
+	balena-image-flasher
+
+NPE X500 M3                              : $ MACHINE=npe-x500-m3 bitbake balena-image
+Raspberry Pi Zero 2 W (64bit)            : $ MACHINE=raspberrypi0-2w-64 bitbake balena-image
+Raspberry Pi 2                           : $ MACHINE=raspberrypi2 bitbake balena-image
+Raspberry Pi 3 (using 64bit OS)          : $ MACHINE=raspberrypi3-64 bitbake balena-image
+Raspberry Pi 3                           : $ MACHINE=raspberrypi3 bitbake balena-image
+UniPi Neuron (Raspberry Pi 3) (NEW)      : $ MACHINE=raspberrypi3-unipi-neuron bitbake balena-image
+Raspberry Pi 400 (NEW)                   : $ MACHINE=raspberrypi400-64 bitbake balena-image
+Raspberry Pi 4                           : $ MACHINE=raspberrypi4-64 bitbake balena-image
+SuperHub (NEW)                           : $ MACHINE=raspberrypi4-superhub bitbake balena-image
+UniPi Neuron (Raspberry Pi 4) (NEW)      : $ MACHINE=raspberrypi4-unipi-neuron bitbake balena-image
+Raspberry Pi 5                           : $ MACHINE=raspberrypi5 bitbake balena-image
+Raspberry Pi CM4 IO Board (NEW)          : $ MACHINE=raspberrypicm4-ioboard bitbake balena-image
+Secure boot enabled Raspberry Pi CM4 IO Board (NEW) : $ MACHINE=raspberrypicm4-ioboard-sb bitbake balena-image-flasher
+Raspberry Pi (v1 / Zero / Zero W)        : $ MACHINE=raspberrypi bitbake balena-image
+Revolution Pi Connect 4 (NEW)            : $ MACHINE=revpi-connect-4 bitbake balena-image
+Revolution Pi Connect (NEW)              : $ MACHINE=revpi-connect bitbake balena-image
+Revolution Pi Connect S (NEW)            : $ MACHINE=revpi-connect-s bitbake balena-image
+Revolution Pi Core 3                     : $ MACHINE=revpi-core-3 bitbake balena-image
+Rocktech-RPI-300 (NEW)                   : $ MACHINE=rt-rpi-300 bitbake balena-image
+
