@@ -1,5 +1,8 @@
 # Increase boot partition size
 BALENA_BOOT_SIZE = "174080"
+# Required machine overrides
+BALENA_BOOT_SIZE:raspberrypi5 = "174080"
+
 
 BALENA_ESSENTIAL_BOOT_FILES:append:raspberrypi4-64 = " \
     cmdline.txt  \
