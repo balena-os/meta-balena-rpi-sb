@@ -6,7 +6,7 @@ SRC_URI += " \
 "
 
 RDEPENDS:${PN}-sb = "os-helpers-otp"
-RDEPENDS:${PN}-otp:raspberrypi4-64 = "userlandtools"
+RDEPENDS:${PN}-otp = "userlandtools"
 
 PACKAGES += " \
 	${PN}-otp \
