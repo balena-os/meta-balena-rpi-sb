@@ -1,0 +1,56 @@
+otp_read_key() {
+    local _key
+    _key="$(vcmailbox 0x00030081 40 40 0 8 0 0 0 0 0 0 0 0)"
+    echo "${_key}" | sed 's/0x//g' | awk '{for(i=8;i<16;i++) printf $i; print ""}'
+}
+
+# https://www.raspberrypi.com/documentation/computers/configuration.html#common-bootloader-properties-chosenbootloader
+#
+# +---------+-------------------------------------------------------------+
+# |   Bit   |                        Description                          |
+# +---------+-------------------------------------------------------------+
+# |    0    | SIGNED BOOT was defined in the EEPROM config file.  |
+# +---------+-------------------------------------------------------------+
+# |    1    | Reserved                                                    |
+# +---------+-------------------------------------------------------------+
+# |    2    | The ROM development key has been revoked. See revoke_devkey. |
+# +---------+-------------------------------------------------------------+
+# |    3    | The customer public key digest has been written to OTP. See |
+# |         | program_pubkey.                                           |
+# +---------+-------------------------------------------------------------+
+# |  4..31  | Reserved                                                    |
+# +---------+-------------------------------------------------------------+
+#
+
+_otp_signed_binary() {
+    if [ -f "/proc/device-tree/chosen/bootloader/signed" ]; then
+        _signed_hex=$(xxd -p -l 1 /proc/device-tree/chosen/bootloader/signed)
+        printf "%08d\n" "$(echo "obase=2; ibase=16; ${_signed_hex}" | bc)"
+        return 0
+    fi
+    return 1
+}
+
+# Return sucess if the bootloader is configured with SIGNED_BOOT
+otp_is_signed_boot() {
+    if [ "$(_otp_signed_binary | cut -c8-8)" -eq 1 ]; then
+        return 0
+    fi
+    return 1
+}
+
+# Return success if the development key has been revoked
+otp_is_devkey_revoked() {
+    if [ "$(_otp_signed_binary | cut -c6-6)" -eq 1 ]; then
+        return 0
+    fi
+    return 1
+}
+
+# Return success if the public key digest is written in the OTP
+otp_has_pubkey_digest() {
+    if [ "$(_otp_signed_binary | cut -c5-5)" -eq 1 ]; then
+        return 0
+    fi
+    return 1
+}
