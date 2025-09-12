@@ -1,0 +1,412 @@
+- commits:
+    - subject: "rpi-eeprom: use the correct EEPROM configuration"
+      hash: 1789d2041763a13b553b403856dbcc43b1f90c73
+      body: |
+        We are no longer using the raspberrypicm4-ioboard-sb machine to build
+        a secure boot image but the same raspberrypicm4-ioboard machine.
+
+        Still, we need to apply the secure boot specific EEPROM configuration.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "conf: samples: remove the raspberrypicm4-ioboard-sb machine"
+      hash: d258b006633cb0033c16921437fb2d1e14b8bcdf
+      body: |
+        We are now using the same machine for both secure boot and non-secure
+        boot builds. The deployed slug will still be raspberrypicm4-ioboard-sb
+        though.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "conf: samples: conf-notes: stop using raspberrypicm4-ioboard-sb"
+      hash: eb7f3d4594202456dc41424dedb24655b888bdb1
+      body: |
+        With the separation of the secure boot features into a different layer
+        we can use the same raspberrypicm4-ioboard machine but still deploy it
+        as a raspberrypicm4-ioboard-sb slug.
+
+        This simplification makes sense as the hardware has not changed, this
+        layer only adds a specific feature.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "rpi-cmdline: stop using raspberrypicm4-ioboard-sb"
+      hash: e42cfda2583798eaaa77842ee0eb60c282e28d64
+      body: |
+        With the separation of the secure boot features into a different layer
+        we can use the same raspberrypicm4-ioboard machine but still deploy it
+        as a raspberrypicm4-ioboard-sb slug.
+
+        This simplification makes sense as the hardware has not changed, this
+        layer only adds a specific feature.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alex Gonzalez
+      nested: []
+    - subject: "rpi-config: stop using raspberrypicm4-ioboard-sb"
+      hash: 7baa49a49bf9b4d6f991513fe44b3cbbd1f35045
+      body: |
+        With the separation of the secure boot features into a different layer
+        we can use the same raspberrypicm4-ioboard machine but still deploy it
+        as a raspberrypicm4-ioboard-sb slug.
+
+        This simplification makes sense as the hardware has not changed, this
+        layer only adds a specific feature.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "balena-image-initramfs: apply to all device types"
+      hash: f8beb249ec0a6912ce73eb44ccaa7eab08543658
+      body: |
+        Any device that uses this layer will need an extended initramfs size.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "balena-image: apply append to all device types"
+      hash: 3b2ed00222a2543a4fe165c1edb0d4ea2e78a6f8
+      body: |
+        Any device that uses this layer will need these changes.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "linux-balena-bootloader: stop using raspberrypicm4-ioboard-sb"
+      hash: 712fdafa589f46a989f26b76dd7bef0747aeaaec
+      body: |
+        With the separation of the secure boot features into a different layer
+        we can use the same raspberrypicm4-ioboard machine but still deploy it
+        as a raspberrypicm4-ioboard-sb slug.
+
+        This simplification makes sense as the hardware has not changed, this
+        layer only adds a specific feature.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "linux-raspberrypi: stop using raspberrypicm4-ioboard-sb"
+      hash: dc6a07e6cf213e204f32c8ad7fa5e929c9de3443
+      body: |
+        With the separation of the secure boot features into a different layer
+        we can use the same raspberrypicm4-ioboard machine but still deploy it
+        as a raspberrypicm4-ioboard-sb slug.
+
+        This simplification makes sense as the hardware has not changed, this
+        layer only adds a specific feature.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "hostapp-update-hooks: adapt to all device types"
+      hash: 68e9dd0e025fd3f55ceab55e4e19c66835d68812
+      body: |
+        Any device that uses this layer will need to use the balena bootloader
+        and requires these appends.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "resin-mount: use balena-rpi service for all machines"
+      hash: bb5ed3a4809242699829abd17bc15abca311c451
+      body: |
+        Any machine that uses this layer will need to mount the rpi partition.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "conf:samples: add templates"
+      hash: 3d43e12315943479db212895e2bf54d1ba862489
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "linux-balena-bootloader: move in secure boot support"
+      hash: 3eeda1263d19fb7bf051d6d3788c725ee19f3323
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "linux-raspberrypi: move in secure boot support"
+      hash: cc74b1b443d1c2e077defc2bc5fac696d08b966b
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "usbboot-native: move in secure boot support"
+      hash: e9f4a8672b885bad8804890b87d2a03fbe72bab4
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "bootfiles: move in secure boot support"
+      hash: 306af84ac5e1834b1bc153ac064a8b222a1e0994
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "rpi-eeprom: move in secure boot support"
+      hash: 1b774363d57d6932fc2e0bec0482fc353afdef27
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "balena-image-initramfs: move in secure boot support"
+      hash: c2e3aa7b60987d0c280d7da1e7596846cac98e1a
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "resin-mounts: move in secure boot support"
+      hash: 52521a84119d84031eef2f4fe7ec497f57caf53d
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "initrdscripts: move in secure boot support"
+      hash: 78590798e693fba9bb863c2af03d838c40bd3bd0
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "resin-init: move in secure boot support"
+      hash: 0d5354e68b9f39c457aac4e238e9c89bf689ab36
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "os-helpers: move in secure boot support"
+      hash: 1e533e1b1a0f331d1d6d20a539ac4f06abf5a4be
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "meta-balena-raspberrypi: balena-keys: move in secure boot support"
+      hash: b4af75ed560c95663433c7a97f3892e127f07475
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "classes: move in secure boot support"
+      hash: d2abfadc6ff9b279ccbd2c50b45c9f5d43829672
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "hostapp-update-hooks: move in secure boot support"
+      hash: 42814d2ce492a96ced965fb3fdec5afac7b20e69
+      body: |
+        The secure boot and disk encryption support is being abstracted to
+        a different layer.
+
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "images: balena-image*: move in secure boot support"
+      hash: 8715a50a6a1d338b9fb48c9933fabb6ed8c14cbc
+      body: |
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "bootfiles: rpi-cmdline: move in secure boot support."
+      hash: 12418515935bc708c19dca2bd86c0593d5e94f8a
+      body: |
+        From meta-balena-raspberrypi @32414ab8285c45c8f8c47d017f3a4a78b0da63e6
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "conf: samples: add conf-notes"
+      hash: 885b75977fda93cb4266714c7c54ca602098ebc3
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "conf: layer.conf: set non-encrypted partition boot label"
+      hash: 49ddf90fa4918acab740299cd5f56f1484e14ff7
+      body: |
+        Move this from a raspberrycm4-ioboard-sb specific setting to any
+        device that uses this layer.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: "flowzone: add support"
+      hash: 8b4e1592b4fa8a555a4aaa97bef57ddf62f2f3c0
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: Layer initialization
+      hash: 6e5cda6c28b99ddd5ac9b0c85928cbc096b19a9b
+      body: |
+        Create later configuration and move secure boot documentation from
+        the balena-raspberrypi docs directory to the layer's README.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+  version: 0.0.2
+  title: ""
+  date: 2025-09-12T12:39:34.460Z
