@@ -1,4 +1,20 @@
 - commits:
+    - subject: "balena-image-initramfs: re-add the kexec pi4 fwgpio module"
+      hash: dd0fd29f31e7af0eff2d5d636f4c1bcf893612a9
+      body: |
+        This was mistakenly drop in the transition of functionality to this
+        branch.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+  version: 0.0.3
+  title: ""
+  date: 2025-09-15T09:47:00.008Z
+- commits:
     - subject: "rpi-eeprom: use the correct EEPROM configuration"
       hash: 1789d2041763a13b553b403856dbcc43b1f90c73
       body: |
