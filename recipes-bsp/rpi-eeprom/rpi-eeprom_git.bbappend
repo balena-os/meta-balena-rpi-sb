@@ -50,7 +50,6 @@ do_compile[vardeps] = "SIGN_API"
 do_deploy:append() {
     if [ "x${SIGN_API}" != "x" ]; then
         install -d ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock
-        cp -avL ${S}/${FIRMWARE}/stable/recovery.bin ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/bootcode4.bin
         echo "uart_2ndstage=1" > ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/config.txt
         echo "eeprom_write_protect=1" >> ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/config.txt
         echo "program_pubkey=1" >> ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/config.txt
@@ -58,5 +57,16 @@ do_deploy:append() {
         echo "program_jtag_lock=1" >> ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/config.txt
         cp -av ${WORKDIR}/pieeprom-latest-stable*bin ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/pieeprom.bin
         cp -av ${WORKDIR}/pieeprom-latest-stable*sig ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/pieeprom.sig
+    fi
+}
+do_deploy:append:rspberrypi4-64() {
+    if [ "x${SIGN_API}" != "x" ]; then
+        cp -avL ${S}/${FIRMWARE}/stable/recovery.bin ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/bootcode4.bin
+    fi
+}
+
+do_deploy:append:rspberrypi5() {
+    if [ "x${SIGN_API}" != "x" ]; then
+        cp -avL ${S}/${FIRMWARE}/stable/recovery.bin ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/recovery.bin
     fi
 }

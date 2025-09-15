@@ -14,6 +14,7 @@ This document describes the device specific aspects of the balenaOS secure boot 
 ### Supported devices
 
 * RaspberryPi CM4 ioboard (`raspberrypicm4-ioboard` device type)
+* RaspberryPi CM5 ioboard (`raspberrypi5` device type)
 
 ### Provisioning
 

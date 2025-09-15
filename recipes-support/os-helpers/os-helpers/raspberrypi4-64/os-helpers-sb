@@ -25,9 +25,7 @@ BALENA_NONENCRYPTED_BOOT_PARTITION_FILES="\
     boot.scr \
     boot.sig \
     config.txt \
-    bcm2711-rpi-400.dtb \
-    bcm2711-rpi-4-b.dtb \
-    bcm2711-rpi-cm4.dtb \
+    @@DEVICE_TREES@@ \
     @@BALENA_IMAGE_FLAG_FILE@@ \
     extra_uEnv.txt \
     @@KERNEL_IMAGETYPE@@ \
@@ -66,4 +64,16 @@ do_skip() {
 	# the 1-bootfiles script that copies files to the encrypted /mnt/boot partition
 	# If running a different script, return 0 to skip it
 	test "$(basename "$0")" != "1-bootfiles"
+}
+
+get_bootloader_version() {
+	printf "%d" "0x$(od "/proc/device-tree/chosen/bootloader/build-timestamp" -v -An -t x1 | tr -d ' ' )"
+}
+
+print_bootloader_config() {
+	blconfig_ofnode_path="/sys/firmware/devicetree/base"$(strings "/sys/firmware/devicetree/base/aliases/blconfig")""
+	blconfig_nvmem_path=$(dirname $(find -L /sys/bus/nvmem -maxdepth 3 -samefile "${blconfig_ofnode_path}" 2>/dev/null))
+	if [ -n "${blconfig_nvmem_path}" ]; then
+		cat "${blconfig_nvmem_path}"/nvmem
+	fi
 }

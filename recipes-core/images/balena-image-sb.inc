@@ -1,5 +1,8 @@
 # Increase boot partition size
 BALENA_BOOT_SIZE = "174080"
+# Required machine overrides
+BALENA_BOOT_SIZE:raspberrypi5 = "174080"
+
 
 BALENA_ESSENTIAL_BOOT_FILES:append:raspberrypi4-64 = " \
     cmdline.txt  \
@@ -13,6 +16,14 @@ BALENA_ESSENTIAL_BOOT_FILES:append:raspberrypi4-64 = " \
     ${SDIMG_KERNELIMAGE} \
     ${KERNEL_IMAGETYPE} \
     "
+
+BALENA_ESSENTIAL_BOOT_FILES:append:raspberrypi5 = " \
+    cmdline.txt  \
+    config.txt  \
+    ${SDIMG_KERNELIMAGE} \
+    ${KERNEL_IMAGETYPE} \
+    "
+
 do_rootfs[vardeps] += "${@oe.utils.conditional('SIGN_API','','','BALENA_ESSENTIAL_BOOT_FILES',d)}"
 
 BALENA_BOOT_PARTITION_FILES:remove = " \
