@@ -55,12 +55,6 @@ do_balena_signed_bootgen_and_deploy() {
               bbnote "Skipping ${f}"
               continue
         fi
-        # keep a copy of the firmware in boot.img for EEPROM self-update
-        if echo "${fname}" | grep -q -E "pieeprom.*\.bin$"; then
-            cp -vf "${f}" "${dname}/pieeprom.upd"
-        elif echo "${fname}" | grep -q -E "pieeprom.*\.sig$"; then
-            cp -vf "${f}" "${dname}/pieeprom.sig"
-        fi
         cp -rvf "${f}" "${tmpdir}/"
         rm -rf "${f:?}"
         # remove directory only once it is empty
@@ -68,6 +62,17 @@ do_balena_signed_bootgen_and_deploy() {
             rmdir -p --ignore-fail-on-non-empty "${dname}"
         fi
     done
+
+    # Keep the EEPROM pieeprom.upd pieeprom.sig in both:
+    # boot.img for secure-boot's self-update
+    # the boot partition for the flasher
+    for f in pieeprom.upd pieeprom.sig; do
+        if [ ! -f "${tmpdir}/${f}" ]; then
+            bbfatal "Missing EEPROM self-update payload: ${tmpdir}/${f}"
+        fi
+        cp -vf "${tmpdir}/${f}" "${BALENA_BOOT_WORKDIR}/${f}"
+    done
+
     # Copy the essential stage1 boot files into the disk image
     mcopy -i "${BOOTIMG_LOCATION}" -svm ${BALENA_BOOT_WORKDIR}/* ::
 
