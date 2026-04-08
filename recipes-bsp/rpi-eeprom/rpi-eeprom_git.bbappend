@@ -29,10 +29,10 @@ do_compile:append() {
 
         # Merge the configuration file into the firmware
         ${PYTHON} "${WORKDIR}/rpi-eeprom-config" --config "${boot_conf}" --digest "${boot_conf}.sig" \
-              --out "${WORKDIR}/${tgt_eeprom_bin}" --pubkey "${DEPLOY_DIR_IMAGE}/balena-keys/rsa.pem" "${WORKDIR}/${src_eeprom_bin}"
+              --out "${WORKDIR}/${TGT_EEPROM_BIN}" --pubkey "${DEPLOY_DIR_IMAGE}/balena-keys/rsa.pem" "${WORKDIR}/${src_eeprom_bin}"
 
         # Sign the firmware
-        do_sign_rsa "${WORKDIR}/${tgt_eeprom_bin}" "${WORKDIR}/${tgt_eeprom_bin%.bin}.sig"
+        do_sign_rsa "${WORKDIR}/${TGT_EEPROM_BIN}" "${WORKDIR}/${TGT_EEPROM_SIG}"
     fi
 }
 
@@ -56,7 +56,7 @@ do_deploy:append() {
         echo "program_pubkey=1" >> ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/config.txt
         echo "revoke_devkey=1" >> ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/config.txt
         echo "program_jtag_lock=1" >> ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/config.txt
-        cp -av ${WORKDIR}/pieeprom-latest-stable*bin ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/pieeprom.bin
-        cp -av ${WORKDIR}/pieeprom-latest-stable*sig ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/pieeprom.sig
+        cp -av ${WORKDIR}/${TGT_EEPROM_BIN} ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/pieeprom.bin
+        cp -av ${WORKDIR}/${TGT_EEPROM_SIG} ${DEPLOY_DIR_IMAGE}/rpi-eeprom/secure-boot-lock/pieeprom.sig
     fi
 }
