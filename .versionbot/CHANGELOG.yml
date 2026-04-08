@@ -1,4 +1,20 @@
 - commits:
+    - subject: Remove discontinued device types raspberrypi400-64, revpi-connect,
+        revpi-core-3
+      hash: 33d3f41b9d56943d613f8bd71add1d38c8d8a740
+      body: |
+        As per https://docs.balena.io/reference/hardware/versioning#discontinued
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Florin Sarbu <florin@balena.io>
+        signed-off-by: Florin Sarbu <florin@balena.io>
+      author: Florin Sarbu
+      nested: []
+  version: 0.0.5
+  title: ""
+  date: 2026-04-08T09:30:18.591Z
+- commits:
     - subject: "bootfiles: do not append OS command line"
       hash: 83aab9217f1ea702d8b11a1188a4fe43ccee974f
       body: |
