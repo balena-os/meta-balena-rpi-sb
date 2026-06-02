@@ -25,8 +25,6 @@ BALENA_BOOT_PARTITION_FILES:append = " \
     balena-bootloader/bootenv:/bootenv \
     "
 
-BALENA_BOOT_PARTITION_FILES:append = "${@oe.utils.conditional('SIGN_API','','',' rpi-eeprom/pieeprom-latest-stable.sig:/pieeprom-latest-stable.sig',d)}"
-
 IMAGE_INSTALL:remove = " u-boot"
 IMAGE_INSTALL:append = " grub-editenv"
 
