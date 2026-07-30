@@ -1,6 +1,3 @@
-# Increase boot partition size
-BALENA_BOOT_SIZE = "174080"
-
 BALENA_ESSENTIAL_BOOT_FILES:append:raspberrypi4-64 = " \
     cmdline.txt  \
     config.txt  \
@@ -30,7 +27,5 @@ IMAGE_INSTALL:append = " grub-editenv"
 
 do_rootfs[depends] += " virtual/balena-bootloader:do_deploy"
 do_image_balenaos_img[depends] += " virtual/balena-bootloader:do_deploy"
-
-IMAGE_ROOTFS_SIZE ="655360"
 
 inherit image-sign-rpi
