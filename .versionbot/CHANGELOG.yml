@@ -1,4 +1,22 @@
 - commits:
+    - subject: "classes/sb-override: Add :sb override, drop redundant size globals"
+      hash: 2214ee48f8e20145b90f8a7913dc522f75133845
+      body: |
+        Lets other layers use VAR:machine:sb overrides that only apply when
+        this layer is present. Removed the now-redundant bare
+        BALENA_BOOT_SIZE/IMAGE_ROOTFS_SIZE globals from balena-image-sb.inc,
+        since the calling layer now sets them via a machine:sb override.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: guille-vega <guillermo.vega@balena.io>
+        signed-off-by: guille-vega <guillermo.vega@balena.io>
+      author: guille-vega
+      nested: []
+  version: 0.0.7
+  title: ""
+  date: 2026-07-31T05:59:39.558Z
+- commits:
     - subject: the eeprom binary was renamed so that we can use self update in non
         secureboot as well
       hash: 13b198da6c31fb13627fcff8425d662bc637f1e8
