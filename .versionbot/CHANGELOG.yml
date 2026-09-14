@@ -1,4 +1,18 @@
 - commits:
+    - subject: remove unnecessary files from rpi clear boot partition
+      hash: a45d8bd8916e4b64b574c7d36af09f7e6a10654f
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+        signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+      author: Yann CARDAILLAC
+      nested: []
+  version: 0.1.0
+  title: ""
+  date: 2026-09-14T10:39:39.851Z
+- commits:
     - subject: "classes/sb-override: Add :sb override, drop redundant size globals"
       hash: 2214ee48f8e20145b90f8a7913dc522f75133845
       body: |
