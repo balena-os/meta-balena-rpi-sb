@@ -13,6 +13,52 @@
 OTP_KEY_LENGTH=32
 OTP_KEY_REP_LENGTH=64
 
+# Wait until the kernel reports at least this many bits in entropy_avail.
+ENTROPY_MIN_BITS=256
+ENTROPY_WAIT_RETRIES=5
+ENTROPY_WAIT_SLEEP_SECS=1
+
+wait_for_entropy() {
+    local _min_bits="${1:-${ENTROPY_MIN_BITS}}"
+    local _retries="${2:-${ENTROPY_WAIT_RETRIES}}"
+    local _attempt=0
+    local _avail
+
+    while [ "${_attempt}" -lt "${_retries}" ]; do
+        if [ -r /proc/sys/kernel/random/entropy_avail ]; then
+            _avail="$(cat /proc/sys/kernel/random/entropy_avail)"
+            if [ "${_avail}" -ge "${_min_bits}" ] 2>/dev/null; then
+                info "Entropy available: ${_avail} bits"
+                return 0
+            fi
+            warn "Insufficient entropy (${_avail} < ${_min_bits} bits), retry $((_attempt + 1))/${_retries}..."
+        else
+            warn "entropy_avail not readable, retry $((_attempt + 1))/${_retries}..."
+        fi
+        sleep "${ENTROPY_WAIT_SLEEP_SECS}"
+        _attempt=$((_attempt + 1))
+    done
+    fail "Timed out waiting for entropy"
+}
+
+# HWRNG to the kernel pool before drawing keys.
+seed_from_hwrng() {
+    local _bytes="${1:-256}"
+
+    if [ ! -c /dev/hwrng ]; then
+        fail "/dev/hwrng not available"
+    fi
+    if [ ! -c /dev/random ]; then
+        fail "/dev/random not available"
+    fi
+
+    if dd if=/dev/hwrng of=/dev/random bs="${_bytes}" count=1 2>/dev/null; then
+        info "Seeded kernel RNG from /dev/hwrng (${_bytes} bytes)"
+    else
+        fail "Failed to seed from /dev/hwrng"
+    fi
+}
+
 otp_write_key() {
     local _key="${1}"
     local _count
@@ -52,23 +98,27 @@ otp_write_key() {
     fi
 }
 
-otp_generate_key() {
+generate_random_key() {
     local _key_length
     _key_length="${1}"
+    wait_for_entropy
     head -c ${_key_length} /dev/urandom | xxd -p -c ${_key_length}
 }
 
 diskenc_setup() {
         local _key
 
+        # Being extra cautious, seed hardware RNG to kernel RNG
+        seed_from_hwrng
+
         # Make sure the private key is present in OTP
-        _key=$(otp_generate_key ${OTP_KEY_LENGTH})
+        _key=$(generate_random_key ${OTP_KEY_LENGTH})
         otp_write_key "${_key}" || fail "Failed to write private key to OTP"
 
         TPM_RESULT_DIR=$(mktemp -d)
         PASSPHRASE_FILE="$(mktemp -p "${TPM_RESULT_DIR}")"
         # Generate the disk encryption passphrase
-        otp_generate_key ${OTP_KEY_LENGTH} > "${PASSPHRASE_FILE}"
+        generate_random_key ${OTP_KEY_LENGTH} > "${PASSPHRASE_FILE}"
 
         # Encrypt the passphrase using the private key
         ENC_PASSPHRASE_FILE=$(mktemp -u -p ${TPM_RESULT_DIR})
