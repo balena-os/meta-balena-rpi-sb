@@ -13,6 +13,28 @@
 OTP_KEY_LENGTH=32
 OTP_KEY_REP_LENGTH=64
 
+# Require at least 256 bits in entropy_avail after generating secrets.
+ENTROPY_MIN_BITS=256
+
+# Maximum time in seconds to wait for the kernel CRNG to be seeded.
+RANDOM_READ_TIMEOUT=15
+
+check_entropy() {
+    local entropy_avail
+
+    if [ ! -r /proc/sys/kernel/random/entropy_avail ]; then
+        fail "entropy_avail not readable"
+    fi
+
+    entropy_avail="$(cat /proc/sys/kernel/random/entropy_avail)"
+    if [ "${entropy_avail}" -ge "${ENTROPY_MIN_BITS}" ] 2>/dev/null; then
+        info "Entropy available: ${entropy_avail} bits"
+        return 0
+    fi
+
+    fail "Insufficient entropy (${entropy_avail} < ${ENTROPY_MIN_BITS} bits)"
+}
+
 otp_write_key() {
     local _key="${1}"
     local _count
@@ -52,25 +74,38 @@ otp_write_key() {
     fi
 }
 
-otp_generate_key() {
+generate_random_key() {
     local _key_length
+    local _key
     _key_length="${1}"
-    head -c ${_key_length} /dev/urandom | xxd -p -c ${_key_length}
+
+    _key="$(timeout ${RANDOM_READ_TIMEOUT} xxd -p -l ${_key_length} -c ${_key_length} /dev/random)" \
+        || fail "Timed out waiting for the kernel CRNG to be seeded"
+
+    if [ "$(echo -n "${_key}" | wc -c)" != $((_key_length * 2)) ]; then
+        fail "Short read from /dev/random"
+    fi
+
+    echo "${_key}"
 }
 
 diskenc_setup() {
         local _key
 
         # Make sure the private key is present in OTP
-        _key=$(otp_generate_key ${OTP_KEY_LENGTH})
+        _key=$(generate_random_key ${OTP_KEY_LENGTH}) || fail "Failed to generate private key"
         otp_write_key "${_key}" || fail "Failed to write private key to OTP"
 
         TPM_RESULT_DIR=$(mktemp -d)
         PASSPHRASE_FILE="$(mktemp -p "${TPM_RESULT_DIR}")"
         # Generate the disk encryption passphrase
-        otp_generate_key ${OTP_KEY_LENGTH} > "${PASSPHRASE_FILE}"
+        generate_random_key ${OTP_KEY_LENGTH} > "${PASSPHRASE_FILE}" || fail "Failed to generate passphrase"
 
         # Encrypt the passphrase using the private key
         ENC_PASSPHRASE_FILE=$(mktemp -u -p ${TPM_RESULT_DIR})
         gpg --symmetric --cipher-algo AES256 --batch --passphrase $(otp_read_key) -o "${ENC_PASSPHRASE_FILE}" < "${PASSPHRASE_FILE}" || fail "Failed to encrypt passphrase"
+
+        # The entropy check should never fail as /dev/random is blocking until the CRNG is seeded.
+        # If that were to change some day, the entropy check would fail and the flasher would exit.
+        check_entropy || fail "Insufficient entropy"
 }
