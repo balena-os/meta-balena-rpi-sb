@@ -13,6 +13,25 @@
 OTP_KEY_LENGTH=32
 OTP_KEY_REP_LENGTH=64
 
+# Require at least 256 bits in entropy_avail before generating secrets.
+ENTROPY_MIN_BITS=256
+
+check_entropy() {
+    local entropy_avail
+
+    if [ ! -r /proc/sys/kernel/random/entropy_avail ]; then
+        fail "entropy_avail not readable"
+    fi
+
+    entropy_avail="$(cat /proc/sys/kernel/random/entropy_avail)"
+    if [ "${entropy_avail}" -ge "${ENTROPY_MIN_BITS}" ] 2>/dev/null; then
+        info "Entropy available: ${entropy_avail} bits"
+        return 0
+    fi
+
+    fail "Insufficient entropy (${entropy_avail} < ${ENTROPY_MIN_BITS} bits)"
+}
+
 otp_write_key() {
     local _key="${1}"
     local _count
@@ -52,9 +71,10 @@ otp_write_key() {
     fi
 }
 
-otp_generate_key() {
+generate_random_key() {
     local _key_length
     _key_length="${1}"
+    check_entropy
     head -c ${_key_length} /dev/urandom | xxd -p -c ${_key_length}
 }
 
@@ -62,13 +82,13 @@ diskenc_setup() {
         local _key
 
         # Make sure the private key is present in OTP
-        _key=$(otp_generate_key ${OTP_KEY_LENGTH})
+        _key=$(generate_random_key ${OTP_KEY_LENGTH}) || fail "Failed to generate private key"
         otp_write_key "${_key}" || fail "Failed to write private key to OTP"
 
         TPM_RESULT_DIR=$(mktemp -d)
         PASSPHRASE_FILE="$(mktemp -p "${TPM_RESULT_DIR}")"
         # Generate the disk encryption passphrase
-        otp_generate_key ${OTP_KEY_LENGTH} > "${PASSPHRASE_FILE}"
+        generate_random_key ${OTP_KEY_LENGTH} > "${PASSPHRASE_FILE}"
 
         # Encrypt the passphrase using the private key
         ENC_PASSPHRASE_FILE=$(mktemp -u -p ${TPM_RESULT_DIR})
