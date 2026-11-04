@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add support for Yocto Scarthgap
+      hash: 5d69ddbe5c430069c831d5e147776225b123eac6
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Florin Sarbu <florin@balena.io>
+        signed-off-by: Florin Sarbu <florin@balena.io>
+      author: Florin Sarbu
+      nested: []
+  version: 0.1.1
+  title: ""
+  date: 2026-11-04T17:48:17.300Z
+- commits:
     - subject: remove unnecessary files from rpi clear boot partition
       hash: a45d8bd8916e4b64b574c7d36af09f7e6a10654f
       body: ""
