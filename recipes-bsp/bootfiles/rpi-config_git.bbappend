@@ -2,4 +2,7 @@ do_deploy:append:raspberrypicm4-ioboard() {
     echo "dtoverlay=dwc2,dr_mode=host" >> ${DEPLOYDIR}/bootfiles/config.txt
     # Remap audio pins to free GPIOs 40/41 for SPI0 EEPROM programming
     echo "dtoverlay=audremap" >> ${DEPLOYDIR}/bootfiles/config.txt
+    # Disable PCIe by default. Since CM4 has no IOMMU, PCIe can use DMA
+    # to dump secret from the RAM,
+    echo "dtparam=pcie=off" >> ${DEPLOYDIR}/bootfiles/config.txt
 }
