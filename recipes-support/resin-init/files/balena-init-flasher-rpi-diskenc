@@ -103,7 +103,9 @@ diskenc_setup() {
 
         # Encrypt the passphrase using the private key
         ENC_PASSPHRASE_FILE=$(mktemp -u -p ${TPM_RESULT_DIR})
-        gpg --symmetric --cipher-algo AES256 --batch --passphrase $(otp_read_key) -o "${ENC_PASSPHRASE_FILE}" < "${PASSPHRASE_FILE}" || fail "Failed to encrypt passphrase"
+        otp_read_key | gpg --symmetric --cipher-algo AES256 --batch --pinentry-mode loopback \
+            --passphrase-fd 0 -o "${ENC_PASSPHRASE_FILE}" "${PASSPHRASE_FILE}" \
+            || fail "Failed to encrypt passphrase"
 
         # The entropy check should never fail as /dev/random is blocking until the CRNG is seeded.
         # If that were to change some day, the entropy check would fail and the flasher would exit.
