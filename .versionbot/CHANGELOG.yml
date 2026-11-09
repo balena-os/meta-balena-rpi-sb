@@ -1,4 +1,18 @@
 - commits:
+    - subject: Fix a race condition that made incomplete resin-boot in the hostapp
+      hash: f739d9cd163b4c3142ac3b23d7b41355d3836cdc
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+        signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+      author: Yann CARDAILLAC
+      nested: []
+  version: 0.1.2
+  title: ""
+  date: 2026-11-09T11:16:06.878Z
+- commits:
     - subject: Add support for Yocto Scarthgap
       hash: 5d69ddbe5c430069c831d5e147776225b123eac6
       body: ""
