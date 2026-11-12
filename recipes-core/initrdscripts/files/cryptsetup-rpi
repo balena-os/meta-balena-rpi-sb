@@ -55,7 +55,8 @@ cryptsetup_run() {
     mount "$BALENA_NONENC_BOOT_DEV" "$TMP_MOUNT_DIR"
 
     PASSPHRASE_FILE=$(mktemp -u)
-    if ! gpg --decrypt --batch --passphrase "$(otp_read_key)" -o "$PASSPHRASE_FILE" "${TMP_MOUNT_DIR}/balena-luks.enc"; then
+    if ! otp_read_key | gpg --decrypt --batch --pinentry-mode loopback \
+            --passphrase-fd 0 -o "$PASSPHRASE_FILE" "${TMP_MOUNT_DIR}/balena-luks.enc"; then
         umount "$TMP_MOUNT_DIR"
         fail "Failed to decrypt LUKS passphrase"
     fi
