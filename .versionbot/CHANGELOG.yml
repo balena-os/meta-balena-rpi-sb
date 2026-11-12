@@ -1,4 +1,37 @@
 - commits:
+    - subject: use gpg with passphrase-fd to avoid having the secrets on cmdline
+      hash: 786e7d3d0eafdb2df167d264b5e73547e1e76bbe
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+        signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+      author: Yann CARDAILLAC
+      nested: []
+    - subject: use blocking random instead of urandom to generate random keys
+      hash: acc1ca7e7b483948718e45bf1412145888987b7e
+      body: |
+        The pentest brought to our intention that it's good practice to verify
+        the available entropy before generating secrets.
+        /dev/random is blocking until there's enough entropy, so it's a better
+        candidate than /dev/urandom.
+        We will also verify that the entropy available is enough to verify that
+        /dev/random is still doing his blocking behavior properly.
+        During testing, we saw the entropy always being ready the first time
+        we used it, so this is really only making sure explicitly that there's
+        enought entropy.
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+        signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+      author: Yann CARDAILLAC
+      nested: []
+  version: 0.2.0
+  title: ""
+  date: 2026-11-12T14:09:34.611Z
+- commits:
     - subject: Fix a race condition that made incomplete resin-boot in the hostapp
       hash: f739d9cd163b4c3142ac3b23d7b41355d3836cdc
       body: ""
