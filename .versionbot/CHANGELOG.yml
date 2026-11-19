@@ -1,4 +1,30 @@
 - commits:
+    - subject: Remove NVME PCIe from BOOT_ORDER
+      hash: 651c63bb514bccb2d7dcb7d8756894593596323f
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+        signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+      author: Yann CARDAILLAC
+      nested: []
+    - subject: Disable pcie for CM4 as it can be used to dump secrets
+      hash: 8a47237994946be79e2c2b89f7b6bb3bfe8b5d8a
+      body: |
+        CM4 has no IOMMU, PCIe can use DMA to dump secret from the RAM,
+        in the future we will add pcie in private device repo if necessary
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+        signed-off-by: Yann CARDAILLAC <yann.cardaillac@balena.io>
+      author: Yann CARDAILLAC
+      nested: []
+  version: 0.3.0
+  title: ""
+  date: 2026-11-19T16:06:35.022Z
+- commits:
     - subject: use gpg with passphrase-fd to avoid having the secrets on cmdline
       hash: 786e7d3d0eafdb2df167d264b5e73547e1e76bbe
       body: ""
